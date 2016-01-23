@@ -1,5 +1,6 @@
 package org.buldakov;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,8 +16,9 @@ public class CsvCleaner {
         CSVReader reader = null;
         CSVWriter writer = null;
         try {
-            reader = new CSVReader(new FileReader(args[0]));
-            writer = new CSVWriter(new FileWriter("Cleaned_" + args[0]));
+            File from = new File(args[0]);
+            reader = new CSVReader(new FileReader(from));
+            writer = new CSVWriter(new FileWriter("Cleaned_" + from.getName()));
             reader.readNext(); //skip headers
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
