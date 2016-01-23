@@ -31,7 +31,6 @@ public class Top10FromAirports {
         jobA.setMapperClass(FromAirportsMapper.class);
         jobA.setReducerClass(FromAirportsReducer.class);
 
-
         ZipFileInputFormat.setLenient(true);
         ZipFileInputFormat.setInputPaths(jobA, new Path("/capstone/ontime_input/*.zip"));
         FileOutputFormat.setOutputPath(jobA, tmpPath);
