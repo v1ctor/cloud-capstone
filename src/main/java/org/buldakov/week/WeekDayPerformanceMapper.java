@@ -8,10 +8,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.buldakov.common.TextArrayWritable;
 import org.joda.time.DateTime;
 
-public class WeekDayPerformanceMapper extends Mapper<Text, Text, IntWritable, TextArrayWritable> {
+public class WeekDayPerformanceMapper extends Mapper<Object, Text, IntWritable, TextArrayWritable> {
 
     @Override
-    public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         String[] parts = value.toString().split("\t");
 
         DateTime date = new DateTime(parts[0]);
