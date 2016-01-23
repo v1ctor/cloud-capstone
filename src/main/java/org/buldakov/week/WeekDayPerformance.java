@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.buldakov.common.TextArrayWritable;
 
 public class WeekDayPerformance {
 
@@ -18,7 +18,7 @@ public class WeekDayPerformance {
         Job job = Job.getInstance(conf, "Week days performance");
 
         job.setOutputKeyClass(IntWritable.class);
-        job.setOutputValueClass(DoubleWritable.class);
+        job.setOutputValueClass(TextArrayWritable.class);
 
         job.setMapperClass(WeekDayPerformanceMapper.class);
         job.setReducerClass(WeekDayPerformanceReducer.class);
