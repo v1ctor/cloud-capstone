@@ -31,11 +31,10 @@ public class Top10FromAirports {
         jobA.setMapperClass(FromAirportsMapper.class);
         jobA.setReducerClass(FromAirportsReducer.class);
 
-        FileInputFormat.setInputPaths(jobA, new Path(args[0]));
-        FileOutputFormat.setOutputPath(jobA, tmpPath);
+
         ZipFileInputFormat.setLenient(true);
         ZipFileInputFormat.setInputPaths(jobA, new Path("/capstone/ontime_input/*.zip"));
-        TextOutputFormat.setOutputPath(jobA, tmpPath);
+        FileOutputFormat.setOutputPath(jobA, tmpPath);
 
         jobA.setJarByClass(Top10FromAirports.class);
         jobA.waitForCompletion(true);
@@ -49,7 +48,7 @@ public class Top10FromAirports {
         jobB.setReducerClass(Top10FromAirportsReducer.class);
         jobB.setNumReduceTasks(1);
         FileInputFormat.setInputPaths(jobB, tmpPath);
-        FileOutputFormat.setOutputPath(jobB, new Path(args[1]));
+        FileOutputFormat.setOutputPath(jobB, new Path("/capstone/ontime_output"));
         jobB.setInputFormatClass(KeyValueTextInputFormat.class);
         jobB.setOutputFormatClass(TextOutputFormat.class);
         jobB.setJarByClass(Top10FromAirports.class);
