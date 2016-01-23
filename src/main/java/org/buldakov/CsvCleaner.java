@@ -18,7 +18,7 @@ public class CsvCleaner {
         try {
             File from = new File(args[0]);
             reader = new CSVReader(new FileReader(from));
-            writer = new CSVWriter(new FileWriter("Cleaned_" + from.getName()));
+            writer = new CSVWriter(new FileWriter("Cleaned_" + from.getName()), '\t');
             reader.readNext(); //skip headers
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
@@ -98,9 +98,10 @@ public class CsvCleaner {
                 // 72 - "Div2LongestGTime",
                 // 73 - "Div2WheelsOff",
                 // 74 - "Div2TailNum",
+                if (!"1".equals(nextLine[41])) { //Cancelled
+                    writer.writeNext(result.toArray(new String[0]));
+                }
 
-
-                writer.writeNext(result.toArray(new String[0]));
             }
         } catch (IOException e) {
             e.printStackTrace();
