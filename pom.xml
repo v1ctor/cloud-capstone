@@ -29,7 +29,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <finalName>shkap-server</finalName>
+                    <finalName>cloud-capstone</finalName>
                 </configuration>
             </plugin>
         </plugins>
