@@ -12,15 +12,15 @@ public class WeekDayPerformanceReducer extends Reducer<IntWritable, TextArrayWri
 
     @Override
     public void reduce(IntWritable key, Iterable<TextArrayWritable> values, Context context) throws IOException, InterruptedException {
-        int late = 0;
-        int count = 0;
+        double late = 0;
+        double count = 0;
         for (TextArrayWritable val : values) {
             Text[] pair = (Text[]) val.toArray();
-            late += Boolean.parseBoolean(pair[0].toString()) ? 1 : 0;
-            count += Integer.parseInt(pair[1].toString());
+            late += Boolean.parseBoolean(pair[0].toString()) ? 1.0 : 0.0;
+            count += Double.parseDouble(pair[1].toString());
         }
 
-        double percentOnTime = 100 - ((late / count) * 100);
+        double percentOnTime = 100.0 - ((late / count) * 100.0);
 
         context.write(key, new DoubleWritable(percentOnTime));
     }
