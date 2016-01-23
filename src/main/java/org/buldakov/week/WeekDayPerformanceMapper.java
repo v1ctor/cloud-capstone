@@ -12,13 +12,18 @@ public class WeekDayPerformanceMapper extends Mapper<Object, Text, IntWritable, 
 
     @Override
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-        String[] parts = value.toString().split("\t");
+        try {
 
-        DateTime date = new DateTime(parts[0]);
-        int dayOfWeek = date.dayOfWeek().get();
-        double arrDelay = Double.parseDouble(parts[6]);
+            String[] parts = value.toString().split("\t");
 
-        String[] result = {Boolean.toString(arrDelay >= 15), "1"};
-        context.write(new IntWritable(dayOfWeek), new TextArrayWritable(result));
+            DateTime date = new DateTime(parts[0]);
+            int dayOfWeek = date.dayOfWeek().get();
+            double arrDelay = Double.parseDouble(parts[6]);
+
+            String[] result = {Boolean.toString(arrDelay >= 15), "1"};
+            context.write(new IntWritable(dayOfWeek), new TextArrayWritable(result));
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
 }
