@@ -98,7 +98,7 @@ public class CsvCleaner {
                 // 72 - "Div2LongestGTime",
                 // 73 - "Div2WheelsOff",
                 // 74 - "Div2TailNum",
-                if (nextLine[41].isEmpty()) { //Cancelled
+                if (nextLine[41].isEmpty() || Double.parseDouble(nextLine[41]) == 0) { //Cancelled
                     writer.writeNext(result.toArray(new String[0]));
                 }
 
