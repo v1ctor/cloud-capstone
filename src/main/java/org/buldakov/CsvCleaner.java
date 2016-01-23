@@ -101,7 +101,7 @@ public class CsvCleaner {
                 boolean canceled = !nextLine[41].isEmpty() && Double.parseDouble(nextLine[41]) == 1;
                 boolean diverted = !nextLine[43].isEmpty() && Double.parseDouble(nextLine[43]) == 1;
                 if (!canceled && !diverted) { //Cancelled
-                    writer.writeNext(result.toArray(new String[0]));
+                    writer.writeNext(result.toArray(new String[0]), false);
                 }
 
             }
