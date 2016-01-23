@@ -113,6 +113,6 @@ public class CsvCleaner {
                 reader.close();
             }
         }
-
+        System.out.println(args[0] + "; Done!");
     }
 }
