@@ -13,7 +13,6 @@ import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.buldakov.common.TextArrayWritable;
-import org.buldakov.performance.PerformanceReducer;
 import org.buldakov.week.WeekDayPerformance;
 
 public class DepartureCarrierPerformance {
@@ -40,8 +39,8 @@ public class DepartureCarrierPerformance {
 
         Job top10AirlinePerformance = Job.getInstance(conf, "Top Departure Carrier performance");
 
-        top10AirlinePerformance.setOutputKeyClass(TextArrayWritable.class);
-        top10AirlinePerformance.setOutputValueClass(DoubleWritable.class);
+        top10AirlinePerformance.setOutputKeyClass(Text.class);
+        top10AirlinePerformance.setOutputValueClass(TextArrayWritable.class);
 
         top10AirlinePerformance.setMapOutputKeyClass(Text.class);
         top10AirlinePerformance.setMapOutputValueClass(TextArrayWritable.class);
