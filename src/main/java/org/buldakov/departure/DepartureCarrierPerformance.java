@@ -53,7 +53,7 @@ public class DepartureCarrierPerformance {
 
         top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);
 
-        top10AirlinePerformance.setJarByClass(WeekDayPerformance.class);
+        top10AirlinePerformance.setJarByClass(DepartureCarrierPerformance.class);
         System.exit(top10AirlinePerformance.waitForCompletion(true) ? 0 : 1);
     }
 }
