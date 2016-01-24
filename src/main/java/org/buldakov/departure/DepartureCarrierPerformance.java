@@ -30,7 +30,7 @@ public class DepartureCarrierPerformance {
         airlinePerformanceJob.setOutputValueClass(DoubleWritable.class);
 
         airlinePerformanceJob.setMapperClass(DepartureCarrierPerformanceMapper.class);
-        airlinePerformanceJob.setReducerClass(PerformanceReducer.class);
+        airlinePerformanceJob.setReducerClass(DeparturePerformanceReducer.class);
 
         FileInputFormat.setInputPaths(airlinePerformanceJob, new Path("/capstone/ontime_input/*.csv"));
         FileOutputFormat.setOutputPath(airlinePerformanceJob, tmpPath);

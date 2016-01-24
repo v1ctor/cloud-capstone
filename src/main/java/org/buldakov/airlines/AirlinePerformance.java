@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -28,7 +29,7 @@ public class AirlinePerformance {
         Job airlinePerformanceJob = Job.getInstance(conf, "Airline performance");
 
         airlinePerformanceJob.setOutputKeyClass(Text.class);
-        airlinePerformanceJob.setOutputValueClass(TextArrayWritable.class);
+        airlinePerformanceJob.setOutputValueClass(BooleanWritable.class);
 
         airlinePerformanceJob.setMapperClass(AirlinePerformanceMapper.class);
         airlinePerformanceJob.setReducerClass(PerformanceReducer.class);

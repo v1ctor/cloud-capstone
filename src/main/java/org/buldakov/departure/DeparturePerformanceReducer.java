@@ -1,16 +1,16 @@
-package org.buldakov.performance;
+package org.buldakov.departure;
 
 import java.io.IOException;
 
 import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.io.DoubleWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.buldakov.common.TextArrayWritable;
 
-public class PerformanceReducer extends Reducer<Text, BooleanWritable, Object, DoubleWritable> {
+public class DeparturePerformanceReducer extends Reducer<TextArrayWritable, BooleanWritable, Object, DoubleWritable> {
 
     @Override
-    public void reduce(Text key, Iterable<BooleanWritable> values, Context context) throws IOException, InterruptedException {
+    public void reduce(TextArrayWritable key, Iterable<BooleanWritable> values, Context context) throws IOException, InterruptedException {
         double late = 0;
         int count = 0;
         for (BooleanWritable val : values) {
