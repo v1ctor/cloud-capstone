@@ -5,11 +5,10 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.buldakov.common.TextArrayWritable;
@@ -26,7 +25,7 @@ public class DepartureCarrierPerformance {
         Job airlinePerformanceJob = Job.getInstance(conf, "Departure Carrier performance");
 
         airlinePerformanceJob.setOutputKeyClass(TextArrayWritable.class);
-        airlinePerformanceJob.setOutputValueClass(DoubleWritable.class);
+        airlinePerformanceJob.setOutputValueClass(BooleanWritable.class);
 
         airlinePerformanceJob.setMapperClass(DepartureCarrierPerformanceMapper.class);
         airlinePerformanceJob.setReducerClass(DeparturePerformanceReducer.class);
@@ -52,7 +51,6 @@ public class DepartureCarrierPerformance {
         FileInputFormat.setInputPaths(top10AirlinePerformance, tmpPath);
         FileOutputFormat.setOutputPath(top10AirlinePerformance, new Path("/capstone/top_10_carrier_per_origin_departure_performance"));
 
-        top10AirlinePerformance.setInputFormatClass(KeyValueTextInputFormat.class);
         top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);
 
         top10AirlinePerformance.setJarByClass(WeekDayPerformance.class);
