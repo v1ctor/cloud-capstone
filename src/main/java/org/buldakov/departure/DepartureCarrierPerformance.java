@@ -23,9 +23,6 @@ public class DepartureCarrierPerformance {
 
         Job airlinePerformanceJob = Job.getInstance(conf, "Departure Carrier performance");
 
-        airlinePerformanceJob.setOutputKeyClass(TextArrayWritable.class);
-        airlinePerformanceJob.setOutputValueClass(DoubleWritable.class);
-
         airlinePerformanceJob.setMapperClass(DepartureCarrierPerformanceMapper.class);
         airlinePerformanceJob.setReducerClass(DeparturePerformanceReducer.class);
 
@@ -35,14 +32,7 @@ public class DepartureCarrierPerformance {
         airlinePerformanceJob.setJarByClass(DepartureCarrierPerformance.class);
         airlinePerformanceJob.waitForCompletion(true);
 
-        
         Job top10AirlinePerformance = Job.getInstance(conf, "Top Departure Carrier performance");
-
-        top10AirlinePerformance.setOutputKeyClass(Text.class);
-        top10AirlinePerformance.setOutputValueClass(TextArrayWritable.class);
-
-        top10AirlinePerformance.setMapOutputKeyClass(Text.class);
-        top10AirlinePerformance.setMapOutputValueClass(TextArrayWritable.class);
 
         top10AirlinePerformance.setMapperClass(TopCarriersByDepPerformanceMapper.class);
         top10AirlinePerformance.setReducerClass(TopCarriersDepByPerformanceReducer.class);
