@@ -7,7 +7,7 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.buldakov.common.TextArrayWritable;
 
-public class DeparturePerformanceReducer extends Reducer<TextArrayWritable, BooleanWritable, Object, DoubleWritable> {
+public class DeparturePerformanceReducer extends Reducer<TextArrayWritable, BooleanWritable, TextArrayWritable, DoubleWritable> {
 
     @Override
     public void reduce(TextArrayWritable key, Iterable<BooleanWritable> values, Context context) throws IOException, InterruptedException {
