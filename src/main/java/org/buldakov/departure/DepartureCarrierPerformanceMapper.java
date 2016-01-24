@@ -5,9 +5,8 @@ import java.io.IOException;
 import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.buldakov.common.TextArrayWritable;
 
-public class DepartureCarrierPerformanceMapper extends Mapper<Object, Text, TextArrayWritable, BooleanWritable> {
+public class DepartureCarrierPerformanceMapper extends Mapper<Object, Text, Text, BooleanWritable> {
 
     @Override
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -17,8 +16,7 @@ public class DepartureCarrierPerformanceMapper extends Mapper<Object, Text, Text
             String origin = parts[2];
             String airline = parts[1];
             double arrDelay = Double.parseDouble(parts[5]); //DepDelay
-            String[] result = {origin, airline};
-            context.write(new TextArrayWritable(result), new BooleanWritable(arrDelay >= 15));
+            context.write(new Text(origin + "|" + airline), new BooleanWritable(arrDelay >= 15));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }

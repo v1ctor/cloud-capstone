@@ -5,12 +5,10 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.buldakov.common.TextArrayWritable;
 
 public class DepartureCarrierPerformance {
 
@@ -21,9 +19,6 @@ public class DepartureCarrierPerformance {
         fs.delete(tmpPath, true);
 
         Job airlinePerformanceJob = Job.getInstance(conf, "Departure Carrier performance");
-
-        airlinePerformanceJob.setMapOutputKeyClass(TextArrayWritable.class);
-        airlinePerformanceJob.setMapOutputValueClass(BooleanWritable.class);
 
         airlinePerformanceJob.setMapperClass(DepartureCarrierPerformanceMapper.class);
         airlinePerformanceJob.setReducerClass(DeparturePerformanceReducer.class);
