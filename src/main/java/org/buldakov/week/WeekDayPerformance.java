@@ -9,6 +9,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.buldakov.common.TextArrayWritable;
+import org.buldakov.performance.PerformanceReducer;
 
 public class WeekDayPerformance {
 
@@ -21,7 +22,7 @@ public class WeekDayPerformance {
         job.setOutputValueClass(TextArrayWritable.class);
 
         job.setMapperClass(WeekDayPerformanceMapper.class);
-        job.setReducerClass(WeekDayPerformanceReducer.class);
+        job.setReducerClass(PerformanceReducer.class);
 
         FileInputFormat.setInputPaths(job, new Path("/capstone/ontime_input/*.csv"));
         FileOutputFormat.setOutputPath(job, new Path("/capstone/week_days_on_time_arrival_performance"));

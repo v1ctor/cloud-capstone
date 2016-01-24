@@ -2,11 +2,11 @@ package org.buldakov.airlines;
 
 import java.io.IOException;
 
+import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.buldakov.common.TextArrayWritable;
 
-public class AirlinePerformanceMapper extends Mapper<Object, Text, Text, TextArrayWritable> {
+public class AirlinePerformanceMapper extends Mapper<Object, Text, Text, BooleanWritable> {
 
     @Override
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -15,9 +15,7 @@ public class AirlinePerformanceMapper extends Mapper<Object, Text, Text, TextArr
 
             String airline = parts[1];
             double arrDelay = Double.parseDouble(parts[6]);
-
-            String[] result = {Boolean.toString(arrDelay >= 15), "1"};
-            context.write(new Text(airline), new TextArrayWritable(result));
+            context.write(new Text(airline), new BooleanWritable(arrDelay >= 15));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
