@@ -11,6 +11,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+import org.buldakov.common.TextArrayWritable;
 
 public class DepartureCarrierPerformance {
 
@@ -35,6 +36,12 @@ public class DepartureCarrierPerformance {
         airlinePerformanceJob.waitForCompletion(true);
 
         Job top10AirlinePerformance = Job.getInstance(conf, "Top Departure Carrier performance");
+
+        top10AirlinePerformance.setOutputKeyClass(Text.class);
+        top10AirlinePerformance.setOutputValueClass(TextArrayWritable.class);
+
+        top10AirlinePerformance.setMapOutputKeyClass(Text.class);
+        top10AirlinePerformance.setMapOutputValueClass(TextArrayWritable.class);
 
         top10AirlinePerformance.setMapperClass(TopCarriersByDepPerformanceMapper.class);
         top10AirlinePerformance.setReducerClass(TopCarriersDepByPerformanceReducer.class);
