@@ -11,7 +11,12 @@ import org.buldakov.common.TextArrayWritable;
 
 public class TopCarriersByOriginDepByPerformanceReducer extends Reducer<Text, TextArrayWritable, Text, DoubleWritable> {
 
-    private TreeSet<Pair<Double, String>> airlines = new TreeSet<>();
+    private TreeSet<Pair<Double, String>> airlines;
+
+    @Override
+    protected void setup(Context context) throws IOException, InterruptedException {
+        this.airlines = new TreeSet<>();
+    }
 
     @Override
     public void reduce(Text key, Iterable<TextArrayWritable> values, Context context) throws IOException, InterruptedException {

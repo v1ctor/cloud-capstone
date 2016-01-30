@@ -10,11 +10,15 @@ public class TopCarriersByDepPerformanceMapper extends Mapper<Text, Text, Text, 
 
     @Override
     public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+
+        String[] parts = key.toString().split("\\|");
+
+        String airport = parts[0];
+        String airline = parts[1];
         Double percent = Double.parseDouble(value.toString());
-        String origin_carrier = key.toString();
-        String[] parts = origin_carrier.split("\\|");
-        String[] strings = {parts[1], percent.toString()};
-        TextArrayWritable val = new TextArrayWritable(strings);
-        context.write(new Text(parts[0]), val);
+
+        String[] values = {airline, percent.toString()};
+
+        context.write(new Text(airport), new TextArrayWritable(values));
     }
 }
