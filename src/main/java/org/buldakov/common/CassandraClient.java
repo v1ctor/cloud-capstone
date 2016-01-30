@@ -12,7 +12,7 @@ public class CassandraClient {
 
     private Cluster cluster;
     private Session session;
-    private String query = "INSERT INTO keytest.keytable (key) VALUES(?)";
+    private String query = "INSERT INTO capstone.keytable (key) VALUES(?)";
     private PreparedStatement preparedStatement;
 
     public Session getSession()  {
