@@ -6,13 +6,16 @@ public class OnTimeRow {
 
     private final DateTime flightDate;
     private final String uniqueCarrier;
+    private final String flight;
     private final String origin;
     private final String destination;
-    private final String crsDepTime;
+    private final int crsDepTime;
     private final double depDelay;
     private final double arrDelay;
 
-    public OnTimeRow(DateTime flightDate, String uniqueCarrier, String origin, String destination, String crsDepTime, double depDelay,
+
+    public OnTimeRow(DateTime flightDate, String uniqueCarrier, String flight,
+            String origin, String destination, int crsDepTime, double depDelay,
             double arrDelay)
     {
         this.flightDate = flightDate;
@@ -23,6 +26,7 @@ public class OnTimeRow {
         this.crsDepTime = crsDepTime;
         this.depDelay = depDelay;
         this.arrDelay = arrDelay;
+        this.flight = flight;
     }
 
     public DateTime getFlightDate() {
@@ -41,8 +45,16 @@ public class OnTimeRow {
         return destination;
     }
 
-    public String getCrsDepTime() {
+    public int getCrsDepTime() {
         return crsDepTime;
+    }
+
+    public String getFlight() {
+        return flight;
+    }
+
+    public boolean isFirstLeg() {
+        return crsDepTime < 1200;
     }
 
     public double getDepDelay() {
@@ -63,7 +75,7 @@ public class OnTimeRow {
 
     public static OnTimeRow parse(String csv) {
         String[] parts = csv.split("\t");
-        return new OnTimeRow(new DateTime(parts[0]), parts[1], parts[2], parts[3], parts[4], Double.parseDouble(parts[5]),
-                Double.parseDouble(parts[6]));
+        return new OnTimeRow(new DateTime(parts[0]), parts[1], parts[2], parts[3], parts[4], Integer.parseInt(parts[5]),
+                Double.parseDouble(parts[6]), Double.parseDouble(parts[7]));
     }
 }

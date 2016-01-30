@@ -5,11 +5,13 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 
 public class JobRunner {
 
@@ -23,18 +25,18 @@ public class JobRunner {
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
         Path tmpPath = new Path("/capstone/tmp/task3_2");
-        Path resultPath = new Path(args[1]);
         fs.delete(tmpPath, true);
-        fs.delete(resultPath, true);
 
         Job routeFinderJob = Job.getInstance(conf, "Route Finder");
 
-        routeFinderJob.setMapOutputKeyClass(Text.class);
-        routeFinderJob.setMapOutputValueClass(BooleanWritable.class);
+        routeFinderJob.setMapOutputKeyClass(Key.class);
+        routeFinderJob.setMapOutputValueClass(Flight.class);
 
-// TODO
-// routeFinderJob.setMapperClass();
-//        routeFinderJob.setReducerClass();
+        routeFinderJob.setMapperClass(RouteMapper.class);
+        routeFinderJob.setReducerClass(RouteReducer.class);
+
+        routeFinderJob.setOutputKeyClass(Text.class);
+        routeFinderJob.setOutputValueClass(Route.class);
 
         FileInputFormat.setInputPaths(routeFinderJob, new Path(args[0]));
         FileOutputFormat.setOutputPath(routeFinderJob, tmpPath);
@@ -42,6 +44,20 @@ public class JobRunner {
         routeFinderJob.setJarByClass(JobRunner.class);
         routeFinderJob.waitForCompletion(true);
 
-        System.exit(routeFinderJob.waitForCompletion(true) ? 0 : 1);
+        Job minRouteFinderJob = Job.getInstance(conf, "Min Route Finder");
+
+        minRouteFinderJob.setInputFormatClass(KeyValueTextInputFormat.class);
+
+        minRouteFinderJob.setMapperClass(Mapper.class);
+        minRouteFinderJob.setMapOutputKeyClass(Text.class);
+        minRouteFinderJob.setMapOutputValueClass(Route.class);
+
+        minRouteFinderJob.setReducerClass(MinRouteReducer.class);
+
+        minRouteFinderJob.setOutputFormatClass(NullOutputFormat.class);
+
+        minRouteFinderJob.setJarByClass(JobRunner.class);
+
+        System.exit(minRouteFinderJob.waitForCompletion(true) ? 0 : 1);
     }
 }

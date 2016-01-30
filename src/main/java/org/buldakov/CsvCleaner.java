@@ -33,7 +33,7 @@ public class CsvCleaner {
                 // 7 - "AirlineID",
                 // 8 - "Carrier",
                 // 9 - "TailNum",
-                // 10 - "FlightNum",
+                result.add(nextLine[10]); // 10 - "FlightNum",
                 result.add(nextLine[11]); // 11 - "Origin",
                 // 12 - "OriginCityName",
                 // 13 - "OriginState",
