@@ -13,6 +13,7 @@ import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.buldakov.common.TextArrayWritable;
+import org.buldakov.performance.PerformanceReducer;
 
 public class JobRunner {
 
@@ -32,7 +33,7 @@ public class JobRunner {
         airlinePerformanceJob.setMapOutputValueClass(BooleanWritable.class);
 
         airlinePerformanceJob.setMapperClass(DepartureCarrierPerformanceMapper.class);
-        airlinePerformanceJob.setReducerClass(DeparturePerformanceReducer.class);
+        airlinePerformanceJob.setReducerClass(PerformanceReducer.class);
 
         FileInputFormat.setInputPaths(airlinePerformanceJob, new Path("/capstone/ontime_input/*.csv"));
         FileOutputFormat.setOutputPath(airlinePerformanceJob, tmpPath);
@@ -48,7 +49,7 @@ public class JobRunner {
         top10AirlinePerformance.setMapOutputKeyClass(Text.class);
         top10AirlinePerformance.setMapOutputValueClass(TextArrayWritable.class);
 
-        top10AirlinePerformance.setReducerClass(TopCarriersDepByPerformanceReducer.class);
+        top10AirlinePerformance.setReducerClass(TopCarriersByDepPerformanceReducer.class);
         top10AirlinePerformance.setOutputKeyClass(Text.class);
         top10AirlinePerformance.setOutputValueClass(TextArrayWritable.class);
         top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);

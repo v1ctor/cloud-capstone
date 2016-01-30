@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.buldakov.common.Pair;
 import org.buldakov.common.TextArrayWritable;
 
-public class TopCarriersDepByPerformanceReducer extends Reducer<Text, TextArrayWritable, Text, TextArrayWritable> {
+public class TopCarriersByDepPerformanceReducer extends Reducer<Text, TextArrayWritable, Text, TextArrayWritable> {
 
     private TreeSet<Pair<Double, String>> airlines = new TreeSet<>();
 
