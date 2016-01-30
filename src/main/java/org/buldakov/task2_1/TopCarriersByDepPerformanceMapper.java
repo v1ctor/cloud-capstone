@@ -17,7 +17,6 @@ public class TopCarriersByDepPerformanceMapper extends Mapper<Text, Text, Text, 
         Double percent = Double.parseDouble(value.toString());
         String origin_carrier = key.toString();
         airlines.add(new Pair<>(percent, origin_carrier));
-        System.out.println(percent + " " + origin_carrier);
         if (airlines.size() > 10) {
             airlines.remove(airlines.first());
         }
@@ -26,7 +25,7 @@ public class TopCarriersByDepPerformanceMapper extends Mapper<Text, Text, Text, 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
         for (Pair<Double, String> item : airlines) {
-            String[] parts = item.second.split("|");
+            String[] parts = item.second.split("\\|");
             String[] strings = {parts[1], item.first.toString()};
             TextArrayWritable val = new TextArrayWritable(strings);
             context.write(new Text(parts[0]), val);

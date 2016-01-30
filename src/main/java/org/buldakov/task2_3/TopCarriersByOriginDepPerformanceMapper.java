@@ -25,7 +25,7 @@ public class TopCarriersByOriginDepPerformanceMapper extends Mapper<Text, Text, 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
         for (Pair<Double, String> item : airlines) {
-            String[] parts = item.second.split("|");
+            String[] parts = item.second.split("\\|");
             String[] strings = {parts[2], item.first.toString()};
             TextArrayWritable val = new TextArrayWritable(strings);
             context.write(new Text(parts[0] + "|" + parts[1]), val);
