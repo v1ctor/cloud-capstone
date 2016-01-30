@@ -6,6 +6,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BooleanWritable;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -51,7 +52,7 @@ public class JobRunner {
 
         top10AirlinePerformance.setReducerClass(TopCarriersByOriginDepByPerformanceReducer.class);
         top10AirlinePerformance.setOutputKeyClass(Text.class);
-        top10AirlinePerformance.setOutputValueClass(TextArrayWritable.class);
+        top10AirlinePerformance.setOutputValueClass(DoubleWritable.class);
         top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);
         FileOutputFormat.setOutputPath(top10AirlinePerformance, resultPath);
 

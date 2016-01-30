@@ -3,12 +3,13 @@ package org.buldakov.task2_3;
 import java.io.IOException;
 import java.util.TreeSet;
 
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.buldakov.common.Pair;
 import org.buldakov.common.TextArrayWritable;
 
-public class TopCarriersByOriginDepByPerformanceReducer extends Reducer<Text, TextArrayWritable, Text, TextArrayWritable> {
+public class TopCarriersByOriginDepByPerformanceReducer extends Reducer<Text, TextArrayWritable, Text, DoubleWritable> {
 
     private TreeSet<Pair<Double, String>> airlines = new TreeSet<>();
 
@@ -24,9 +25,7 @@ public class TopCarriersByOriginDepByPerformanceReducer extends Reducer<Text, Te
             }
         }
         for (Pair<Double, String> item : airlines) {
-            String[] strings = {item.second, item.first.toString()};
-            TextArrayWritable val = new TextArrayWritable(strings);
-            context.write(key, val);
+            context.write(new Text(key.toString() + "|" + item.second), new DoubleWritable(item.first));
         }
     }
 }
