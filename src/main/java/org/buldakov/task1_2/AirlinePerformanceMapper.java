@@ -13,7 +13,7 @@ public class AirlinePerformanceMapper extends Mapper<Object, Text, Text, Boolean
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         try {
             OnTimeRow row = OnTimeRow.parse(value.toString());
-            context.write(new Text(row.getUniqueCarrier()), new BooleanWritable(row.getArrDelay() >= 15));
+            context.write(new Text(row.getUniqueCarrier()), new BooleanWritable(row.isOnTimeArrival()));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }

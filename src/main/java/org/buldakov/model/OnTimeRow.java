@@ -49,8 +49,16 @@ public class OnTimeRow {
         return depDelay;
     }
 
+    public boolean isOnTimeDeparture() {
+        return depDelay >= 15;
+    }
+
     public double getArrDelay() {
         return arrDelay;
+    }
+
+    public boolean isOnTimeArrival() {
+        return arrDelay >= 15;
     }
 
     public static OnTimeRow parse(String csv) {

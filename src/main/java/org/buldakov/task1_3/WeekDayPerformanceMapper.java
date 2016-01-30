@@ -14,7 +14,7 @@ public class WeekDayPerformanceMapper extends Mapper<Object, Text, IntWritable, 
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         try {
             OnTimeRow row = OnTimeRow.parse(value.toString());
-            context.write(new IntWritable(row.getFlightDate().getDayOfWeek()), new BooleanWritable(row.getArrDelay() >= 15));
+            context.write(new IntWritable(row.getFlightDate().getDayOfWeek()), new BooleanWritable(row.isOnTimeArrival()));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
