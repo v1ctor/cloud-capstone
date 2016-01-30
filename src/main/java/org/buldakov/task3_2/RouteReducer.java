@@ -6,18 +6,24 @@ import java.util.List;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.log4j.Logger;
 
 
 public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
 
+    private static final Logger LOGGER = Logger.getLogger(RouteReducer.class);
+
     @Override
     protected void reduce(Text key, Iterable<Flight> values, Context context) throws IOException, InterruptedException {
+        LOGGER.info("Key: " + key.toString());
         List<Flight> firstLegs = new ArrayList<>();
         List<Flight> secondLegs = new ArrayList<>();
         for (Flight flight : values) {
             if (flight.isFirstLeg()) {
                 firstLegs.add(flight);
+                LOGGER.info("first leg : " + flight.getAirport());
             } else {
+                LOGGER.info("second leg : " + flight.getAirport());
                 secondLegs.add(flight);
             }
         }
