@@ -23,9 +23,7 @@ public class JobRunner {
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
         Path tmpPath = new Path("/capstone/tmp/task2_1");
-        Path resultPath = new Path(args[1]);
         fs.delete(tmpPath, true);
-        fs.delete(resultPath, true);
 
         Job airlinePerformanceJob = Job.getInstance(conf, "Departure Carrier performance");
 
@@ -51,10 +49,6 @@ public class JobRunner {
 
         top10AirlinePerformance.setReducerClass(TopCarriersByDepPerformanceReducer.class);
         top10AirlinePerformance.setOutputFormatClass(NullOutputFormat.class);
-//        top10AirlinePerformance.setOutputKeyClass(Text.class);
-//        top10AirlinePerformance.setOutputValueClass(DoubleWritable.class);
-//        top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);
-//        FileOutputFormat.setOutputPath(top10AirlinePerformance, resultPath);
 
         top10AirlinePerformance.setJarByClass(JobRunner.class);
         System.exit(top10AirlinePerformance.waitForCompletion(true) ? 0 : 1);

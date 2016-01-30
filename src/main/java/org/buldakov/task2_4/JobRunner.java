@@ -18,8 +18,6 @@ public class JobRunner {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        Path resultPath = new Path(args[1]);
-        fs.delete(resultPath, true);
 
         Job airlinePerformanceJob = Job.getInstance(conf, "Mean arrival delay by Departure-Origin");
 
@@ -30,8 +28,6 @@ public class JobRunner {
         airlinePerformanceJob.setMapperClass(ArrivalPerformanceMapper.class);
         airlinePerformanceJob.setReducerClass(MeanArrivalPerformanceReducer.class);
         airlinePerformanceJob.setOutputFormatClass(NullOutputFormat.class);
-
-//        FileOutputFormat.setOutputPath(airlinePerformanceJob, resultPath);
 
         airlinePerformanceJob.setJarByClass(JobRunner.class);
         System.exit(airlinePerformanceJob.waitForCompletion(true) ? 0 : 1);

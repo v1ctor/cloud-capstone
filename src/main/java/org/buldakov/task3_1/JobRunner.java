@@ -9,7 +9,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 
 public class JobRunner {
 
@@ -18,8 +18,6 @@ public class JobRunner {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        Path resultPath = new Path(args[1]);
-        fs.delete(resultPath, true);
 
         Job airlinePerformanceJob = Job.getInstance(conf, "Airports popularity");
 
@@ -28,9 +26,9 @@ public class JobRunner {
 
         airlinePerformanceJob.setMapperClass(PopularityMapper.class);
         airlinePerformanceJob.setReducerClass(PopularityReducer.class);
+        airlinePerformanceJob.setOutputFormatClass(NullOutputFormat.class);
 
         FileInputFormat.setInputPaths(airlinePerformanceJob, new Path(args[0]));
-        FileOutputFormat.setOutputPath(airlinePerformanceJob, resultPath);
 
         airlinePerformanceJob.setJarByClass(JobRunner.class);
         System.exit(airlinePerformanceJob.waitForCompletion(true) ? 0 : 1);
