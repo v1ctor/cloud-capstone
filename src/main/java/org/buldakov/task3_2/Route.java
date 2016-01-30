@@ -17,6 +17,9 @@ public class Route implements Writable {
     private String firstFlight;
     private String secondFlight;
 
+    public Route() {
+    }
+
     public String getOrigin() {
         return origin;
     }

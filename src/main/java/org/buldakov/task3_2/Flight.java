@@ -16,6 +16,8 @@ public class Flight implements Writable {
     private String flight;
     private DateTime date;
 
+    public Flight() {}
+
     public Flight(boolean firstLeg, double arrDelay, double depDelay, String airport, String flight, DateTime date) {
         this.firstLeg = firstLeg;
         this.arrDelay = arrDelay;

@@ -12,6 +12,9 @@ public class Key implements WritableComparable<Key> {
     private DateTime date;
     private String airport;
 
+    public Key() {
+    }
+
     public Key(DateTime date, String airport) {
         this.date = date;
         this.airport = airport;
