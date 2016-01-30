@@ -13,7 +13,7 @@ public class WeekDayPerformanceMapper extends Mapper<Object, Text, Text, Boolean
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         try {
             OnTimeRow row = OnTimeRow.parse(value.toString());
-            context.write(new Text(Integer.toString(row.getFlightDate().getDayOfWeek())), new BooleanWritable(row.isOnTimeArrival()));
+            context.write(new Text(Integer.toString(row.getFlightDate().getDayOfWeek())), new BooleanWritable(row.isLateArrival()));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }

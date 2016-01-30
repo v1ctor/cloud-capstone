@@ -14,7 +14,7 @@ public class ArrivalCarrierPerformanceMapper extends Mapper<Object, Text, Text, 
         try {
             OnTimeRow row = OnTimeRow.parse(value.toString());
             context.write(new Text(row.getOrigin() + "|" + row.getDestination() + "|" + row.getUniqueCarrier()),
-                    new BooleanWritable(row.isOnTimeArrival()));
+                    new BooleanWritable(row.isLateArrival()));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }

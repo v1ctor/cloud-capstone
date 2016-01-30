@@ -13,7 +13,7 @@ public class DepartureCarrierPerformanceMapper extends Mapper<Object, Text, Text
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         try {
             OnTimeRow row = OnTimeRow.parse(value.toString());
-            context.write(new Text(row.getOrigin() + "|" + row.getUniqueCarrier()), new BooleanWritable(row.isOnTimeDeparture()));
+            context.write(new Text(row.getOrigin() + "|" + row.getUniqueCarrier()), new BooleanWritable(row.isLateDeparture()));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }

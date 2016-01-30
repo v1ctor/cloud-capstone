@@ -49,7 +49,7 @@ public class OnTimeRow {
         return depDelay;
     }
 
-    public boolean isOnTimeDeparture() {
+    public boolean isLateDeparture() {
         return depDelay >= 15;
     }
 
@@ -57,7 +57,7 @@ public class OnTimeRow {
         return arrDelay;
     }
 
-    public boolean isOnTimeArrival() {
+    public boolean isLateArrival() {
         return arrDelay >= 15;
     }
 
