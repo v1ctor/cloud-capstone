@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -26,6 +27,9 @@ public class JobRunner {
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(DoubleWritable.class);
+
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(BooleanWritable.class);
 
         job.setMapperClass(WeekDayPerformanceMapper.class);
         job.setReducerClass(PerformanceReducer.class);
