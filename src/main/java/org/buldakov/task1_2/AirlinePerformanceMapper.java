@@ -1,21 +1,19 @@
-package org.buldakov.airlines;
+package org.buldakov.task1_2;
 
 import java.io.IOException;
 
 import org.apache.hadoop.io.BooleanWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.buldakov.model.OnTimeRow;
 
 public class AirlinePerformanceMapper extends Mapper<Object, Text, Text, BooleanWritable> {
 
     @Override
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         try {
-            String[] parts = value.toString().split("\t");
-
-            String airline = parts[1];
-            double arrDelay = Double.parseDouble(parts[6]);
-            context.write(new Text(airline), new BooleanWritable(arrDelay >= 15));
+            OnTimeRow row = OnTimeRow.parse(value.toString());
+            context.write(new Text(row.getUniqueCarrier()), new BooleanWritable(row.getArrDelay() >= 15));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }

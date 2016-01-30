@@ -1,4 +1,4 @@
-package org.buldakov.departure;
+package org.buldakov.task2_1;
 
 import java.io.IOException;
 import java.util.TreeSet;

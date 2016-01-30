@@ -1,4 +1,4 @@
-package org.buldakov.airlines;
+package org.buldakov.task1_2;
 
 import java.io.IOException;
 
@@ -16,15 +16,18 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.buldakov.common.TextArrayWritable;
 import org.buldakov.performance.PerformanceReducer;
-import org.buldakov.week.WeekDayPerformance;
 
-public class AirlinePerformance {
+public class JobRunner {
+
+    //Rank the top 10 airlines by on-time arrival performance.
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        Path tmpPath = new Path("/capstone/tmp/airline_on_time_arrival_performance");
+        Path tmpPath = new Path("/capstone/tmp/task1_2");
+        Path resultPath = new Path("/capstone/task1_2");
         fs.delete(tmpPath, true);
+        fs.delete(resultPath, true);
 
         Job airlinePerformanceJob = Job.getInstance(conf, "Airline performance");
 
@@ -37,7 +40,7 @@ public class AirlinePerformance {
         FileInputFormat.setInputPaths(airlinePerformanceJob, new Path("/capstone/ontime_input/*.csv"));
         FileOutputFormat.setOutputPath(airlinePerformanceJob, tmpPath);
 
-        airlinePerformanceJob.setJarByClass(AirlinePerformance.class);
+        airlinePerformanceJob.setJarByClass(JobRunner.class);
         airlinePerformanceJob.waitForCompletion(true);
 
         Job top10AirlinePerformance = Job.getInstance(conf, "Top 10 Airline performance");
@@ -53,12 +56,12 @@ public class AirlinePerformance {
         top10AirlinePerformance.setNumReduceTasks(1);
 
         FileInputFormat.setInputPaths(top10AirlinePerformance, tmpPath);
-        FileOutputFormat.setOutputPath(top10AirlinePerformance, new Path("/capstone/top_10_airline_on_time_arrival_performance"));
+        FileOutputFormat.setOutputPath(top10AirlinePerformance, resultPath);
 
         top10AirlinePerformance.setInputFormatClass(KeyValueTextInputFormat.class);
         top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);
 
-        top10AirlinePerformance.setJarByClass(WeekDayPerformance.class);
+        top10AirlinePerformance.setJarByClass(org.buldakov.task1_3.JobRunner.class);
         System.exit(top10AirlinePerformance.waitForCompletion(true) ? 0 : 1);
     }
 }

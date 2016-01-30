@@ -100,7 +100,7 @@ public class CsvCleaner {
                 // 74 - "Div2TailNum",
                 boolean canceled = !nextLine[41].isEmpty() && Double.parseDouble(nextLine[41]) == 1;
                 boolean diverted = !nextLine[43].isEmpty() && Double.parseDouble(nextLine[43]) == 1;
-                if (!canceled && !diverted) { //Cancelled
+                if (!canceled && !diverted) { //if not cancelled or diverted
                     writer.writeNext(result.toArray(new String[0]), false);
                 }
 
