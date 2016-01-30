@@ -23,12 +23,16 @@ public class RouteReducer extends Reducer<Key, Flight, Text, Text> {
         }
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
-                String resultKey = firstLeg.getAirport() + "|" + key.getAirport() + "|" + secondLeg.getAirport();
+                if (!secondLeg.getAirport().equals(firstLeg.getAirport())) {
+                    String resultKey = firstLeg.getAirport() + "|" + key.getAirport() + "|" + secondLeg.getAirport();
 
-                double overallDelay = firstLeg.getArrDelay() + firstLeg.getDepDelay() + secondLeg.getArrDelay() + secondLeg.getDepDelay();
-                Route route = new Route(firstLeg.getAirport(), key.getAirport(), secondLeg.getAirport(), overallDelay, firstLeg.getDate(),
-                        firstLeg.getFlight(), secondLeg.getFlight());
-                context.write(new Text(resultKey), new Text(route.toCsv()));
+                    double overallDelay = firstLeg.getArrDelay() + firstLeg.getDepDelay() + secondLeg.getArrDelay() + secondLeg.getDepDelay();
+
+                    Route route = new Route(firstLeg.getAirport(), key.getAirport(), secondLeg.getAirport(), overallDelay,
+                            firstLeg.getDate(),
+                            firstLeg.getFlight(), secondLeg.getFlight());
+                    context.write(new Text(resultKey), new Text(route.toCsv()));
+                }
             }
         }
     }

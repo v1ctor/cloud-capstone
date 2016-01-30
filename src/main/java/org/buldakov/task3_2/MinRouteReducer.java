@@ -41,7 +41,7 @@ public class MinRouteReducer extends Reducer<Text, Route, NullWritable, NullWrit
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
         for (Route route : routes.values()) {
-            prepare.bind(route.getOrigin(), route.getIntermediate(), route.getDestination(), route.getDate(),
+            prepare.bind(route.getOrigin(), route.getIntermediate(), route.getDestination(), route.getDate().toString(),
                     route.getFirstFlight(), route.getSecondFlight());
         }
         routes = new TreeMap<>();
