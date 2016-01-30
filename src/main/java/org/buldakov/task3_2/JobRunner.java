@@ -49,7 +49,7 @@ public class JobRunner {
         FileInputFormat.setInputPaths(minRouteFinderJob, tmpPath);
         minRouteFinderJob.setInputFormatClass(KeyValueTextInputFormat.class);
 
-        minRouteFinderJob.setMapperClass(Mapper.class);
+        minRouteFinderJob.setMapperClass(MinRouteMapper.class);
         minRouteFinderJob.setMapOutputKeyClass(Text.class);
         minRouteFinderJob.setMapOutputValueClass(Route.class);
 

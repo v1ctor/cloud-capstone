@@ -8,7 +8,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 
-public class RouteReducer extends Reducer<Key, Flight, Text, Route> {
+public class RouteReducer extends Reducer<Key, Flight, Text, Text> {
 
     @Override
     protected void reduce(Key key, Iterable<Flight> values, Context context) throws IOException, InterruptedException {
@@ -28,7 +28,7 @@ public class RouteReducer extends Reducer<Key, Flight, Text, Route> {
                 double overallDelay = firstLeg.getArrDelay() + firstLeg.getDepDelay() + secondLeg.getArrDelay() + secondLeg.getDepDelay();
                 Route route = new Route(firstLeg.getAirport(), key.getAirport(), secondLeg.getAirport(), overallDelay, firstLeg.getDate(),
                         firstLeg.getFlight(), secondLeg.getFlight());
-                context.write(new Text(resultKey), route);
+                context.write(new Text(resultKey), new Text(route.toCsv()));
             }
         }
     }

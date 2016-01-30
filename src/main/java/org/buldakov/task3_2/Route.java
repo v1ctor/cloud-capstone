@@ -20,6 +20,17 @@ public class Route implements Writable {
     public Route() {
     }
 
+    public Route(String value) {
+        String[] parts = value.split("\\,");
+        overallDelay = Double.parseDouble(parts[0]);
+        firstFlight = parts[1];
+        secondFlight = parts[2];
+        date = DateTime.parse(parts[3]);
+        origin = parts[4];
+        intermediate = parts[5];
+        destination = parts[6];
+    }
+
     public String getOrigin() {
         return origin;
     }
@@ -80,5 +91,14 @@ public class Route implements Writable {
         origin = in.readUTF();
         intermediate = in.readUTF();
         destination = in.readUTF();
+    }
+
+    public String toCsv() {
+        return overallDelay + "," + firstFlight + "," + secondFlight + "," + date.toString() + "," + origin + ","
+                + intermediate + "," + destination;
+    }
+
+    public static Route fromCsv(String value) {
+        return new Route(value);
     }
 }
