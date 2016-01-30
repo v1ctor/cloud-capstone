@@ -46,6 +46,7 @@ public class JobRunner {
 
         Job minRouteFinderJob = Job.getInstance(conf, "Min Route Finder");
 
+        FileInputFormat.setInputPaths(minRouteFinderJob, tmpPath);
         minRouteFinderJob.setInputFormatClass(KeyValueTextInputFormat.class);
 
         minRouteFinderJob.setMapperClass(Mapper.class);
