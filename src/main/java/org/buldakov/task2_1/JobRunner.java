@@ -24,7 +24,7 @@ public class JobRunner {
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
         Path tmpPath = new Path("/capstone/tmp/task2_1");
-        Path resultPath = new Path("/capstone/task2_1");
+        Path resultPath = new Path(args[1]);
         fs.delete(tmpPath, true);
         fs.delete(resultPath, true);
 
@@ -36,7 +36,7 @@ public class JobRunner {
         airlinePerformanceJob.setMapperClass(DepartureCarrierPerformanceMapper.class);
         airlinePerformanceJob.setReducerClass(PerformanceReducer.class);
 
-        FileInputFormat.setInputPaths(airlinePerformanceJob, new Path("/capstone/ontime_input/*.csv"));
+        FileInputFormat.setInputPaths(airlinePerformanceJob, new Path(args[0]));
         FileOutputFormat.setOutputPath(airlinePerformanceJob, tmpPath);
 
         airlinePerformanceJob.setJarByClass(JobRunner.class);

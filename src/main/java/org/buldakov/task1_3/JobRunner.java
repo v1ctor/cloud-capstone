@@ -19,7 +19,7 @@ public class JobRunner {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        Path resultPath = new Path("/capstone/task1_3");
+        Path resultPath = new Path(args[1]);
         fs.delete(resultPath, true);
 
         Job job = Job.getInstance(conf, "Week days performance");
@@ -30,7 +30,7 @@ public class JobRunner {
         job.setMapperClass(WeekDayPerformanceMapper.class);
         job.setReducerClass(PerformanceReducer.class);
 
-        FileInputFormat.setInputPaths(job, new Path("/capstone/ontime_input/*.csv"));
+        FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, resultPath);
 
         job.setJarByClass(JobRunner.class);

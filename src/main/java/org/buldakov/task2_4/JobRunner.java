@@ -18,7 +18,7 @@ public class JobRunner {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        Path resultPath = new Path("/capstone/task2_4");
+        Path resultPath = new Path(args[1]);
         fs.delete(resultPath, true);
 
         Job airlinePerformanceJob = Job.getInstance(conf, "Mean arrival delay by Departure-Origin");
@@ -29,7 +29,7 @@ public class JobRunner {
         airlinePerformanceJob.setMapperClass(ArrivalPerformanceMapper.class);
         airlinePerformanceJob.setReducerClass(MeanArrivalPerformanceReducer.class);
 
-        FileInputFormat.setInputPaths(airlinePerformanceJob, new Path("/capstone/ontime_input/*.csv"));
+        FileInputFormat.setInputPaths(airlinePerformanceJob, new Path(args[0]));
         FileOutputFormat.setOutputPath(airlinePerformanceJob, resultPath);
 
         airlinePerformanceJob.setJarByClass(JobRunner.class);
