@@ -1,0 +1,38 @@
+package org.buldakov.task3_1;
+
+import java.io.IOException;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+public class JobRunner {
+
+    //Does the popularity distribution of airports follow a Zipf distribution? If not, what distribution does it follow?
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(conf);
+        Path resultPath = new Path(args[1]);
+        fs.delete(resultPath, true);
+
+        Job airlinePerformanceJob = Job.getInstance(conf, "Airports popularity");
+
+        airlinePerformanceJob.setMapOutputKeyClass(Text.class);
+        airlinePerformanceJob.setMapOutputValueClass(IntWritable.class);
+
+        airlinePerformanceJob.setMapperClass(PopularityMapper.class);
+        airlinePerformanceJob.setReducerClass(PopularityReducer.class);
+
+        FileInputFormat.setInputPaths(airlinePerformanceJob, new Path(args[0]));
+        FileOutputFormat.setOutputPath(airlinePerformanceJob, resultPath);
+
+        airlinePerformanceJob.setJarByClass(JobRunner.class);
+        System.exit(airlinePerformanceJob.waitForCompletion(true) ? 0 : 1);
+    }
+}
