@@ -9,7 +9,7 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 
 public class JobRunner {
 
@@ -23,14 +23,15 @@ public class JobRunner {
 
         Job airlinePerformanceJob = Job.getInstance(conf, "Mean arrival delay by Departure-Origin");
 
+        FileInputFormat.setInputPaths(airlinePerformanceJob, new Path(args[0]));
         airlinePerformanceJob.setMapOutputKeyClass(Text.class);
         airlinePerformanceJob.setMapOutputValueClass(DoubleWritable.class);
 
         airlinePerformanceJob.setMapperClass(ArrivalPerformanceMapper.class);
         airlinePerformanceJob.setReducerClass(MeanArrivalPerformanceReducer.class);
+        airlinePerformanceJob.setOutputFormatClass(NullOutputFormat.class);
 
-        FileInputFormat.setInputPaths(airlinePerformanceJob, new Path(args[0]));
-        FileOutputFormat.setOutputPath(airlinePerformanceJob, resultPath);
+//        FileOutputFormat.setOutputPath(airlinePerformanceJob, resultPath);
 
         airlinePerformanceJob.setJarByClass(JobRunner.class);
         System.exit(airlinePerformanceJob.waitForCompletion(true) ? 0 : 1);

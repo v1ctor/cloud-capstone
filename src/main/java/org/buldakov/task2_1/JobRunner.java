@@ -6,13 +6,12 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BooleanWritable;
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 import org.buldakov.common.TextArrayWritable;
 import org.buldakov.performance.PerformanceReducer;
 
@@ -51,10 +50,11 @@ public class JobRunner {
         top10AirlinePerformance.setMapOutputValueClass(TextArrayWritable.class);
 
         top10AirlinePerformance.setReducerClass(TopCarriersByDepPerformanceReducer.class);
-        top10AirlinePerformance.setOutputKeyClass(Text.class);
-        top10AirlinePerformance.setOutputValueClass(DoubleWritable.class);
-        top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);
-        FileOutputFormat.setOutputPath(top10AirlinePerformance, resultPath);
+        top10AirlinePerformance.setOutputFormatClass(NullOutputFormat.class);
+//        top10AirlinePerformance.setOutputKeyClass(Text.class);
+//        top10AirlinePerformance.setOutputValueClass(DoubleWritable.class);
+//        top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);
+//        FileOutputFormat.setOutputPath(top10AirlinePerformance, resultPath);
 
         top10AirlinePerformance.setJarByClass(JobRunner.class);
         System.exit(top10AirlinePerformance.waitForCompletion(true) ? 0 : 1);
