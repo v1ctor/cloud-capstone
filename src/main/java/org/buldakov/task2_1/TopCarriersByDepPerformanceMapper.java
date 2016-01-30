@@ -5,13 +5,10 @@ import java.util.TreeSet;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.log4j.Logger;
 import org.buldakov.common.Pair;
 import org.buldakov.common.TextArrayWritable;
 
 public class TopCarriersByDepPerformanceMapper extends Mapper<Text, Text, Text, TextArrayWritable> {
-
-    public static Logger log = Logger.getLogger(TopCarriersByDepPerformanceMapper.class);
 
     private TreeSet<Pair<Double, String>> airlines = new TreeSet<>();
 
@@ -20,7 +17,7 @@ public class TopCarriersByDepPerformanceMapper extends Mapper<Text, Text, Text, 
         Double percent = Double.parseDouble(value.toString());
         String origin_carrier = key.toString();
         airlines.add(new Pair<>(percent, origin_carrier));
-        log.info(percent + " " + origin_carrier);
+        System.out.println(percent + " " + origin_carrier);
         if (airlines.size() > 10) {
             airlines.remove(airlines.first());
         }
