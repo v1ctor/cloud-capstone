@@ -33,8 +33,6 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
-        firstLegs = new ArrayList<>();
-        secondLegs = new ArrayList<>();
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
                 LOGGER.info("match : " + firstLeg.getAirport() + " -> " + airport + " -> " + secondLeg.getAirport());
@@ -50,5 +48,7 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
                 }
             }
         }
+        firstLegs = new ArrayList<>();
+        secondLegs = new ArrayList<>();
     }
 }
