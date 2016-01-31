@@ -3,6 +3,7 @@ package org.buldakov.task3_2;
 import java.io.IOException;
 import java.util.TreeMap;
 
+import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.PreparedStatement;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -41,8 +42,10 @@ public class MinRouteReducer extends Reducer<Text, Route, NullWritable, NullWrit
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
         for (Route route : routes.values()) {
-            prepare.bind(route.getOrigin(), route.getIntermediate(), route.getDestination(), route.getDate().toString(),
+            BoundStatement statement = prepare.bind(route.getOrigin(), route.getIntermediate(), route.getDestination(),
+                    route.getDate().toString(),
                     route.getFirstFlight(), route.getSecondFlight());
+            cclient.execute(statement);
         }
         routes = new TreeMap<>();
         cclient.closeConnection();
