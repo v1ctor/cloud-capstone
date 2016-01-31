@@ -58,6 +58,8 @@ public class JobRunner {
 
         minRouteFinderJob.setJarByClass(JobRunner.class);
 
-        System.exit(minRouteFinderJob.waitForCompletion(true) ? 0 : 1);
+        boolean result = minRouteFinderJob.waitForCompletion(true);
+        fs.delete(tmpPath, true);
+        System.exit(result ? 0 : 1);
     }
 }

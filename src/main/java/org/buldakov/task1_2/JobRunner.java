@@ -62,6 +62,8 @@ public class JobRunner {
         top10AirlinePerformance.setOutputFormatClass(TextOutputFormat.class);
 
         top10AirlinePerformance.setJarByClass(org.buldakov.task1_3.JobRunner.class);
-        System.exit(top10AirlinePerformance.waitForCompletion(true) ? 0 : 1);
+        boolean result = top10AirlinePerformance.waitForCompletion(true);
+        fs.delete(tmpPath, true);
+        System.exit(result ? 0 : 1);
     }
 }

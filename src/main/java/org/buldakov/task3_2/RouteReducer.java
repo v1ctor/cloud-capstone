@@ -6,12 +6,9 @@ import java.util.List;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.log4j.Logger;
 
 
 public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
-
-    private static final Logger LOGGER = Logger.getLogger(RouteReducer.class);
 
     @Override
     protected void reduce(Text key, Iterable<Flight> values, Context context) throws IOException, InterruptedException {
@@ -26,11 +23,9 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
                 secondLegs.add(result);
             }
         }
-        //LOGGER.info("Metrics: key = " + key.toString() + " second = " + secondLegs.toString() + " first = " + firstLegs.toString());
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
                 if (!secondLeg.getAirport().equals(firstLeg.getAirport())) {
-                    LOGGER.info("match : " + firstLeg.getAirport() + " -> " + airport + " -> " + secondLeg.getAirport());
                     String resultKey = firstLeg.getAirport() + "|" + airport + "|" + secondLeg.getAirport();
 
                     double overallDelay = firstLeg.getArrDelay() + firstLeg.getDepDelay() + secondLeg.getArrDelay() + secondLeg.getDepDelay();
