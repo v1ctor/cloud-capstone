@@ -1,3 +1,8 @@
+DROP KEYSPACE capstone;
+CREATE KEYSPACE capstone with replication = {'class':'SimpleStrategy', 'replication_factor':1};
+
+USE capstone;
+
 DROP TABLE task21;
 DROP TABLE task23;
 DROP TABLE task24;
