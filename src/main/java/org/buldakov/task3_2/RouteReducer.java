@@ -13,11 +13,13 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
 
     private static final Logger LOGGER = Logger.getLogger(RouteReducer.class);
 
+    private List<Flight> firstLegs = new ArrayList<>();
+    private List<Flight> secondLegs = new ArrayList<>();
+    private String airport;
+
     @Override
     protected void reduce(Text key, Iterable<Flight> values, Context context) throws IOException, InterruptedException {
-        String airport = key.toString().split("\\|")[1];
-        List<Flight> firstLegs = new ArrayList<>();
-        List<Flight> secondLegs = new ArrayList<>();
+        airport = key.toString().split("\\|")[1];
         for (Flight flight : values) {
             if (flight.isFirstLeg()) {
                 firstLegs.add(flight);
@@ -27,6 +29,12 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
                 secondLegs.add(flight);
             }
         }
+    }
+
+    @Override
+    protected void cleanup(Context context) throws IOException, InterruptedException {
+        firstLegs = new ArrayList<>();
+        secondLegs = new ArrayList<>();
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
                 LOGGER.info("match : " + firstLeg.getAirport() + " -> " + airport + " -> " + secondLeg.getAirport());
