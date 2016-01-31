@@ -20,13 +20,11 @@ public class RouteMapper extends Mapper<Object, Text, Text, Flight> {
             if (row.isFirstLeg()) {
                 //First leg
                 String resultKey = date.plusDays(2).toString() + "|" + row.getDestination();
-                LOGGER.info("First Leg Key: " + resultKey);
                 context.write(new Text(resultKey),
                         new Flight(row.isFirstLeg(), row.getArrDelay(), row.getDepDelay(), row.getOrigin(), row.getFlight(), date));
             } else {
                 //Second leg
                 String resultKey = date.toString() + "|" + row.getOrigin();
-                LOGGER.info("Second Leg Key: " + resultKey);
                 context.write(new Text(resultKey),
                         new Flight(row.isFirstLeg(), row.getArrDelay(), row.getDepDelay(), row.getDestination(), row.getFlight(), date));
             }

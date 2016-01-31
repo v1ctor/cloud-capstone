@@ -15,23 +15,21 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
 
     @Override
     protected void reduce(Text key, Iterable<Flight> values, Context context) throws IOException, InterruptedException {
-        LOGGER.info("Key: " + key.toString());
+        String airport = key.toString().split("\\|")[1];
         List<Flight> firstLegs = new ArrayList<>();
         List<Flight> secondLegs = new ArrayList<>();
         for (Flight flight : values) {
             if (flight.isFirstLeg()) {
                 firstLegs.add(flight);
-                LOGGER.info("first leg : " + flight.getAirport());
+                LOGGER.info("first leg : " + flight.getAirport() + "->" + airport);
             } else {
-                LOGGER.info("second leg : " + flight.getAirport());
+                LOGGER.info("second leg : " + airport + " -> " + flight.getAirport());
                 secondLegs.add(flight);
             }
         }
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
                 if (!secondLeg.getAirport().equals(firstLeg.getAirport())) {
-
-                    String airport = key.toString().split("\\|")[1];
                     String resultKey = firstLeg.getAirport() + "|" + airport + "|" + secondLeg.getAirport();
 
                     double overallDelay = firstLeg.getArrDelay() + firstLeg.getDepDelay() + secondLeg.getArrDelay() + secondLeg.getDepDelay();
