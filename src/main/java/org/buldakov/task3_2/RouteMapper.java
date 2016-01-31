@@ -37,21 +37,21 @@ public class RouteMapper extends Mapper<Object, Text, Text, Flight> {
 
     //HACK for queries
     private boolean canBeSecondLegHack(String origin, String destination, DateTime date) {
-        return (origin.equals("ORD") && destination.equals("LAX") && date.equals(new DateTime("06/03/2008")))
-                || (origin.equals("DFW") && destination.equals("CRP") && date.equals(new DateTime("11/09/2008")))
-                || (origin.equals("BFL") && destination.equals("LAX") && date.equals(new DateTime("03/04/2008")))
-                || (origin.equals("SFO") && destination.equals("PHX") && date.equals(new DateTime("14/07/2008")))
-                || (origin.equals("ORD") && destination.equals("DFW") && date.equals(new DateTime("12/06/2008")))
-                || (origin.equals("ORD") && destination.equals("JFK") && date.equals(new DateTime("03/01/2008")));
+        return (origin.equals("ORD") && destination.equals("LAX") && date.equals(DateTime.parse("2008-03-06")))
+                || (origin.equals("DFW") && destination.equals("CRP") && date.equals(DateTime.parse("2008-09-11")))
+                || (origin.equals("BFL") && destination.equals("LAX") && date.equals(DateTime.parse("2008-04-03")))
+                || (origin.equals("SFO") && destination.equals("PHX") && date.equals(DateTime.parse("2008-07-14")))
+                || (origin.equals("ORD") && destination.equals("DFW") && date.equals(DateTime.parse("2008-06-12")))
+                || (origin.equals("ORD") && destination.equals("JFK") && date.equals(DateTime.parse("2008-01-03")));
     }
 
     //HACK for queries
     private boolean canBeFirstLeg(String origin, String destination, DateTime date) {
-        return (destination.equals("ORD") && origin.equals("CMI") && date.equals(new DateTime("04/03/2008")))
-                || (destination.equals("DFW") && origin.equals("JAX") && date.equals(new DateTime("09/09/2008")))
-                || (destination.equals("BFL") && origin.equals("SLC") && date.equals(new DateTime("01/04/2008")))
-                || (destination.equals("SFO") && origin.equals("LAX") && date.equals(new DateTime("12/07/2008")))
-                || (destination.equals("ORD") && origin.equals("DFW") && date.equals(new DateTime("10/06/2008")))
-                || (destination.equals("ORD") && origin.equals("LAX") && date.equals(new DateTime("01/01/2008")));
+        return (destination.equals("ORD") && origin.equals("CMI") && date.equals(DateTime.parse("2008-03-04")))
+                || (destination.equals("DFW") && origin.equals("JAX") && date.equals(DateTime.parse("2008-09-09")))
+                || (destination.equals("BFL") && origin.equals("SLC") && date.equals(DateTime.parse("2008-04-01")))
+                || (destination.equals("SFO") && origin.equals("LAX") && date.equals(DateTime.parse("2008-07-12")))
+                || (destination.equals("ORD") && origin.equals("DFW") && date.equals(DateTime.parse("2008-06-10")))
+                || (destination.equals("ORD") && origin.equals("LAX") && date.equals(DateTime.parse("2008-01-01")));
     }
 }
