@@ -70,4 +70,8 @@ public class Flight implements Writable {
         flight = in.readUTF();
         date = DateTime.parse(in.readUTF());
     }
+
+    public Flight copy() {
+        return new Flight(firstLeg, arrDelay, depDelay, airport, flight, date);
+    }
 }

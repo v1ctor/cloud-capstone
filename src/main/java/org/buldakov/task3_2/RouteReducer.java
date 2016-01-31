@@ -19,13 +19,14 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
         List<Flight> secondLegs = new ArrayList<>();
         String airport = key.toString().split("\\|")[1];
         for (Flight flight : values) {
+            Flight result = flight.copy();
             if (flight.isFirstLeg()) {
-                firstLegs.add(flight);
+                firstLegs.add(result);
             } else {
-                secondLegs.add(flight);
+                secondLegs.add(result);
             }
         }
-        LOGGER.info("Metrics: key = " + key.toString() + " second = " + secondLegs.toString() + " first = " + firstLegs.toString());
+        //LOGGER.info("Metrics: key = " + key.toString() + " second = " + secondLegs.toString() + " first = " + firstLegs.toString());
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
                 if (!secondLeg.getAirport().equals(firstLeg.getAirport())) {
