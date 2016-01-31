@@ -4,13 +4,10 @@ import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.log4j.Logger;
 import org.buldakov.model.OnTimeRow;
 import org.joda.time.DateTime;
 
 public class RouteMapper extends Mapper<Object, Text, Text, Flight> {
-
-    private static final Logger LOGGER = Logger.getLogger(RouteMapper.class);
 
     @Override
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {

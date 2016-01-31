@@ -21,17 +21,15 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
         for (Flight flight : values) {
             if (flight.isFirstLeg()) {
                 firstLegs.add(flight);
-                LOGGER.info("first leg : " + flight.getAirport() + " -> " + airport);
             } else {
-                LOGGER.info("second leg : " + airport + " -> " + flight.getAirport());
                 secondLegs.add(flight);
             }
         }
         LOGGER.info("Metrics: second = " + secondLegs.size() + " first = " + firstLegs.size());
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
-                LOGGER.info("match : " + firstLeg.getAirport() + " -> " + airport + " -> " + secondLeg.getAirport());
                 if (!secondLeg.getAirport().equals(firstLeg.getAirport())) {
+                    LOGGER.info("match : " + firstLeg.getAirport() + " -> " + airport + " -> " + secondLeg.getAirport());
                     String resultKey = firstLeg.getAirport() + "|" + airport + "|" + secondLeg.getAirport();
 
                     double overallDelay = firstLeg.getArrDelay() + firstLeg.getDepDelay() + secondLeg.getArrDelay() + secondLeg.getDepDelay();
