@@ -21,7 +21,7 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
         for (Flight flight : values) {
             if (flight.isFirstLeg()) {
                 firstLegs.add(flight);
-                LOGGER.info("first leg : " + flight.getAirport() + "->" + airport);
+                LOGGER.info("first leg : " + flight.getAirport() + " -> " + airport);
             } else {
                 LOGGER.info("second leg : " + airport + " -> " + flight.getAirport());
                 secondLegs.add(flight);
@@ -29,6 +29,7 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
         }
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
+                LOGGER.info("match : " + firstLeg.getAirport() + " -> " + airport + " -> " + secondLeg.getAirport());
                 if (!secondLeg.getAirport().equals(firstLeg.getAirport())) {
                     String resultKey = firstLeg.getAirport() + "|" + airport + "|" + secondLeg.getAirport();
 
