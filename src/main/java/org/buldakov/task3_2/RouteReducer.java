@@ -25,7 +25,7 @@ public class RouteReducer extends Reducer<Text, Flight, Text, Text> {
                 secondLegs.add(flight);
             }
         }
-        LOGGER.info("Metrics: second = " + secondLegs.size() + " first = " + firstLegs.size());
+        LOGGER.info("Metrics: ke = " + key.toString() + "second = " + secondLegs.size() + " first = " + firstLegs.size());
         for (Flight firstLeg : firstLegs) {
             for (Flight secondLeg : secondLegs) {
                 if (!secondLeg.getAirport().equals(firstLeg.getAirport())) {
