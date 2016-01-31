@@ -26,28 +26,25 @@ public class MinRouteReducer extends Reducer<Text, Route, NullWritable, NullWrit
                         "flightDate, firstFlight, secondFlight) VALUES (?, ?, ?, ?, ?, ?);");
     }
 
-    private TreeMap<Double, Route> routes = new TreeMap<>();
-
     @Override
     public void reduce(Text key, Iterable<Route> values, Context context) throws IOException, InterruptedException {
-        for (Route val: values) {
+        TreeMap<Double, Route> routes = new TreeMap<>();
+        for (Route val : values) {
             routes.put(val.getOverallDelay(), val);
             if (routes.size() > 1) {
                 routes.remove(routes.lastKey());
             }
         }
-
-    }
-
-    @Override
-    protected void cleanup(Context context) throws IOException, InterruptedException {
         for (Route route : routes.values()) {
             BoundStatement statement = prepare.bind(route.getOrigin(), route.getIntermediate(), route.getDestination(),
                     route.getDate().toString(),
                     route.getFirstFlight(), route.getSecondFlight());
             cclient.execute(statement);
         }
-        routes = new TreeMap<>();
+    }
+
+    @Override
+    protected void cleanup(Context context) throws IOException, InterruptedException {
         cclient.closeConnection();
     }
 }
