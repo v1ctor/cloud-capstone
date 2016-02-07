@@ -26,7 +26,6 @@ public class Job {
             .mapToPair(new PairFunction<Tuple2<String, String>, String, Tuple2<Integer, Integer>>() {
             @Override
             public Tuple2<String, Tuple2<Integer, Integer>> call(Tuple2<String, String> value) throws Exception {
-                System.out.println(value._1 + " " + value._2);
                 OnTimeRow row = OnTimeRow.parse(value._2);
                 int late = row.isLateArrival() ? 1 : 0;
                 return new Tuple2<>(row.getUniqueCarrier(), new Tuple2<>(1, late));
