@@ -18,7 +18,7 @@ public class KafkaEventProducer {
 
     public static void main(String[] args) throws FileNotFoundException {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "localhost");
+        properties.put("bootstrap.servers", "localhost:9092");
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties, new StringSerializer(), new StringSerializer());
         String path;
         if (args.length == 0) {
