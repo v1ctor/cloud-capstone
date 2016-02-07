@@ -27,7 +27,7 @@ public class KafkaEventProducer {
         String path;
         limit = 0;
         limited = false;
-        if (args.length > 0) {
+        if (args.length == 0) {
             path = "/root/data/csv/cleaned";
         } else {
             path = args[0];
