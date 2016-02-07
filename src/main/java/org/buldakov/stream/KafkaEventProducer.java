@@ -19,10 +19,10 @@ public class KafkaEventProducer {
     public static void main(String[] args) throws FileNotFoundException {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost");
-        KafkaProducer<Object, String> producer = new KafkaProducer<>(properties, null, new StringSerializer());
+        KafkaProducer<String, String> producer = new KafkaProducer<>(properties, new StringSerializer(), new StringSerializer());
         String path;
         if (args.length == 0) {
-            path = "/root/data/csv";
+            path = "/root/data/csv/cleaned";
         } else {
             path = args[0];
         }
@@ -30,7 +30,7 @@ public class KafkaEventProducer {
         File root = new File(path);
         for (File file : root.listFiles()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                producer.send(new ProducerRecord<>(null, reader.readLine()));
+                producer.send(new ProducerRecord<String, String>(null, reader.readLine()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
