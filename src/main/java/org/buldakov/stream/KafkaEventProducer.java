@@ -16,10 +16,12 @@ import org.apache.kafka.common.serialization.StringSerializer;
  */
 public class KafkaEventProducer {
 
+    private static KafkaProducer<String, String> producer;
+
     public static void main(String[] args) throws FileNotFoundException {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
-        KafkaProducer<String, String> producer = new KafkaProducer<>(properties, new StringSerializer(), new StringSerializer());
+        producer = new KafkaProducer<>(properties, new StringSerializer(), new StringSerializer());
         String path;
         if (args.length == 0) {
             path = "/root/data/csv/cleaned";
@@ -28,10 +30,21 @@ public class KafkaEventProducer {
         }
 
         File root = new File(path);
-        for (File file : root.listFiles()) {
-            System.out.print("Process: " + file.getAbsolutePath());
+        processFiles(root);
+    }
+
+    public static void processFiles(File file) {
+        if (file.isDirectory()) {
+            for (File next : file.listFiles()) {
+                processFiles(next);
+            }
+        } else {
+            System.out.println("Process: " + file.getAbsolutePath());
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                producer.send(new ProducerRecord<String, String>("ontime_performance", reader.readLine()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    producer.send(new ProducerRecord<String, String>("ontime_performance", line));
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
