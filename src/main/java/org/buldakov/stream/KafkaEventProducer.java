@@ -30,7 +30,7 @@ public class KafkaEventProducer {
         File root = new File(path);
         for (File file : root.listFiles()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                producer.send(new ProducerRecord<String, String>(null, reader.readLine()));
+                producer.send(new ProducerRecord<String, String>("onetime_performance", reader.readLine()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
