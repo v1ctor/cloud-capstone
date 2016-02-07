@@ -1,10 +1,8 @@
 package org.buldakov.common;
 
-import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Host;
 import com.datastax.driver.core.Metadata;
-import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 
@@ -12,8 +10,6 @@ public class CassandraClient {
 
     private Cluster cluster;
     private Session session;
-    private String query = "INSERT INTO capstone.keytable (key) VALUES(?)";
-    private PreparedStatement preparedStatement;
 
     public Session getSession()  {
         if (this.session == null && (this.cluster == null || this.cluster.isClosed())) {
@@ -35,24 +31,10 @@ public class CassandraClient {
             System.out.printf("Datatacenter: %s; Host: %s; Rack: %s\n", host.getDatacenter(), host.getAddress(), host.getRack());
         }
         this.session = cluster.connect();
-
-
-        this.prepareQueries();
     }
 
     public void closeConnection() {
         cluster.close();
-    }
-
-    private void prepareQueries()  {
-        this.preparedStatement = this.session.prepare(this.query);
-    }
-
-    public void addKey(String key) {
-        BoundStatement bind = this.preparedStatement.bind(key);
-        if(key.length() > 0) {
-            execute(bind);
-        }
     }
 
     public void execute(Statement statement) {
