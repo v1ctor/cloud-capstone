@@ -29,6 +29,7 @@ public class KafkaEventProducer {
 
         File root = new File(path);
         for (File file : root.listFiles()) {
+            System.out.print("Process: " + file.getAbsolutePath());
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 producer.send(new ProducerRecord<String, String>("onetime_performance", reader.readLine()));
             } catch (IOException e) {
