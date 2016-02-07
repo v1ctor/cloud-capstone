@@ -74,7 +74,7 @@ public class OnTimeRow {
     }
 
     public static OnTimeRow parse(String csv) {
-        String[] parts = csv.split("\\,");
+        String[] parts = csv.split(",");
         return new OnTimeRow(new DateTime(parts[0]),
                 parts[1],
                 parts[2],
