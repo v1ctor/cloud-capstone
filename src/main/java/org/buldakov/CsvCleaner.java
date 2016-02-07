@@ -18,7 +18,7 @@ public class CsvCleaner {
         try {
             File from = new File(args[0]);
             reader = new CSVReader(new FileReader(from));
-            writer = new CSVWriter(new FileWriter("Cleaned_" + from.getName()), '\t');
+            writer = new CSVWriter(new FileWriter("Cleaned_" + from.getName()));
             reader.readNext(); //skip headers
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
