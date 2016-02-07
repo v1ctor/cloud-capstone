@@ -19,7 +19,7 @@ import scala.Tuple2;
 public class Job {
 
     public static void main(String[] args) {
-        SparkConf conf = new SparkConf().setAppName("Airline performance").setMaster("local");
+        SparkConf conf = new SparkConf().setAppName("Airline performance").setMaster("local[2]");
         JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(1));
 
         KafkaUtils.createStream(jssc, "localhost", "spark", Collections.singletonMap("ontime_performance", 1))
