@@ -75,13 +75,18 @@ public class OnTimeRow {
 
     public static OnTimeRow parse(String csv) {
         String[] parts = csv.split(",");
-        return new OnTimeRow(new DateTime(parts[0]),
-                parts[1],
-                parts[2],
-                parts[3],
-                parts[4],
-                Integer.parseInt(parts[5]),
-                Double.parseDouble(parts[6]),
-                Double.parseDouble(parts[7]));
+        try {
+            return new OnTimeRow(new DateTime(parts[0]),
+                    parts[1],
+                    parts[2],
+                    parts[3],
+                    parts[4],
+                    Integer.parseInt(parts[5]),
+                    Double.parseDouble(parts[6]),
+                    Double.parseDouble(parts[7]));
+        } catch (Exception e) {
+            System.out.println(csv);
+            throw e;
+        }
     }
 }
