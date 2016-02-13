@@ -1,4 +1,4 @@
-package org.buldakov.stream.task2_1;
+package org.buldakov.stream.task2_4;
 
 import java.util.Collections;
 
@@ -20,12 +20,12 @@ import scala.Tuple2;
  */
 public class Job {
 
-    //CREATE TABLE task21 ( airport text, airline text, percent double, PRIMARY KEY(airport, airline));
+    //CREATE TABLE task24 ( origin text, destination text, percent double, PRIMARY KEY(origin, destination));
 
     public static void main(String[] args) {
         final CassandraClient cclient = new CassandraClient();
         cclient.createConnection("");
-        final PreparedStatement prepare = cclient.getSession().prepare("INSERT INTO capstone2.task21 (airport, airline, percent) VALUES (?, ?, ?);");
+        final PreparedStatement prepare = cclient.getSession().prepare("INSERT INTO capstone2.task24 (origin, destination, percent) VALUES (?, ?, ?);");
 
         SparkConf conf = new SparkConf().setAppName("Airline performance").setMaster("local[2]");
         JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(1));
@@ -35,8 +35,7 @@ public class Job {
             @Override
             public Tuple2<Tuple2<String, String>, Tuple2<Integer, Double>> call(Tuple2<String, String> value) throws Exception {
                 OnTimeRow row = OnTimeRow.parse(value._2);
-                double percent = row.isLateDeparture() ? 0.0 : 100.0;
-                return new Tuple2<>(new Tuple2<>(row.getOrigin(), row.getUniqueCarrier()), new Tuple2<>(1, percent));
+                return new Tuple2<>(new Tuple2<>(row.getOrigin(), row.getDestination()), new Tuple2<>(1, row.getArrDelay()));
             }
         }).reduceByKey(new Function2<Tuple2<Integer, Double>, Tuple2<Integer, Double>, Tuple2<Integer, Double>>() {
             @Override
